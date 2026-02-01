@@ -12,13 +12,14 @@ public class IntegrationRoute extends EndpointRouteBuilder {
 	
 	@Override
 	public void configure() throws Exception {
-		from(miloClient("opc.tcp://localhost:50000")
+		from(miloClient("opc.tcp://user1:password@localhost:50000")
 				.overrideHost(true)
 				.allowedSecurityPolicies(SecurityPolicy.Basic256Sha256.name())
 				.keyStoreUrl("classpath:user.jks")
 				.keyStorePassword("12345678")
 				.keyPassword("12345678")
-				.node(NODE_ID))
+				.node(NODE_ID)
+				.requestedPublishingInterval("5000"))
 			.routeId(OPCUA_CONSUMER_ROUTE)
 			.log(">> Message from OPCUA ${body}");
 	}
